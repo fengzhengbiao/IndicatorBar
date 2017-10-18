@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IndicatorBar">
+        <attr name="default_background" format="color" />
+        <attr name="progress_color" format="color" />
+        <attr name="value_color" format="color" />
+        <attr name="value_textSize" format="dimension" />
+    </declare-styleable>
+</resources>
