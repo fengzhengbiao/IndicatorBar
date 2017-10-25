@@ -33,8 +33,8 @@ dependencies {
 publish {
     userOrg = 'leopard'//bintray.com用户名
     groupId = 'com.leopard'//jcenter上的路径
-    artifactId = 'widget'//项目名称
-    publishVersion = '1.0.0'//版本号
+    artifactId = 'ProgressBar'//项目名称
+    publishVersion = '1.0.1'//版本号
     desc = 'A library containing some widget'//描述，不重要
-    website = 'https://github.com/fengzhengbiao/UtlisAndwidget'//网站，不重要；
+    website = 'https://github.com/fengzhengbiao/IndicatorBar'//网站，不重要；
 }

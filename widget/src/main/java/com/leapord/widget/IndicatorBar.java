@@ -36,6 +36,7 @@ public class IndicatorBar extends View {
     private OnProgressChangedListener listener;
     private PopType popType = PopType.HIDE_MOVING;
     private int action;
+    private int strokeWidth = 1;
 
     public enum PopType {
         OFEN, HIDE_MOVING
@@ -94,7 +95,7 @@ public class IndicatorBar extends View {
         strokePaint.setAntiAlias(true);
         strokePaint.setColor(Color.GRAY);
         strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setStrokeWidth(dp2Px(context, 1));
+        strokePaint.setStrokeWidth(strokeWidth);
 
         pbPaint = new Paint();
         pbPaint.setAntiAlias(true);
@@ -148,7 +149,7 @@ public class IndicatorBar extends View {
         Rect rect = new Rect();
         valuePaint.getTextBounds(value, 0, value.length(), rect);
         int x = xPosition - rect.width() / 2;
-        halfIndicatorWith = rect.width() / 2 + rest;
+        halfIndicatorWith = 2 * rest;
         int roundX = (rect.height() + rest) / 2;
         int right = x + rect.width() + 2 * rest;
         int bottom = 2 * rest + rect.height();
@@ -164,13 +165,20 @@ public class IndicatorBar extends View {
         }
         int top = mHeight - rest * 2 - pbHeight;
         int roundX2 = (top + mHeight) / 3;
-        drawRec(canvas, xPosition - rest * 2, top, xPosition + 2 * rest, mHeight, roundX2, valuePaint);
+        drawRec(canvas, xPosition - rest * 2, top + strokeWidth, xPosition + 2 * rest, mHeight - strokeWidth, roundX2, valuePaint);
 
-        drawRec(canvas, xPosition - rest * 2, top, xPosition + 2 * rest, mHeight, roundX2, strokePaint);
+        drawRec(canvas, xPosition - rest * 2, top + strokeWidth, xPosition + 2 * rest, mHeight - strokeWidth, roundX2, strokePaint);
         int left1 = xPosition - rest * 2 / 3;
         int left2 = xPosition + rest * 2 / 3;
         drawRec(canvas, left1, mHeight - rest - pbHeight, left1 + dp2Px(getContext(), 3), mHeight - rest, 2, bgPaint);
         drawRec(canvas, left2 - dp2Px(getContext(), 3), mHeight - rest - pbHeight, left2, mHeight - rest, 2, bgPaint);
+
+        int tempY = rest + rect.height();
+        if (x < 0) {
+            x = rest;
+        } else if (x + rect.width() + rest > mWidth) {
+            x = mWidth - rect.width() - rest;
+        }
 
         switch (popType) {
             case OFEN:
@@ -187,6 +195,15 @@ public class IndicatorBar extends View {
     }
 
     private void drawPop(Canvas canvas, int x, int roundX, int right, int bottom) {
+        if (x - 2 * rest < 0) {
+            int other = Math.abs(x);
+            right = right + other;
+            x = 2 * rest;
+        } else if (right > mWidth) {
+            int other = right - mWidth;
+            x = x - other + 2 * rest;
+            right = mWidth;
+        }
         drawRec(canvas, x - 2 * rest, 0, right, bottom, roundX, pbPaint);
         Path path = new Path();
         path.moveTo(xPosition - rest * 2 / 3, bottom);
