@@ -1,4 +1,4 @@
-package com.leapord.widget;
+package com.leopard.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.leapord.widget.R;
 
 
 /**
